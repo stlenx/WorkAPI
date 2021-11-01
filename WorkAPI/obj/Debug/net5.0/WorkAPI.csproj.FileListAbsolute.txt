@@ -26,3 +26,4 @@ C:\Users\sat\RiderProjects\WorkAPI\WorkAPI\obj\Debug\net5.0\WorkAPI.dll
 C:\Users\sat\RiderProjects\WorkAPI\WorkAPI\obj\Debug\net5.0\ref\WorkAPI.dll
 C:\Users\sat\RiderProjects\WorkAPI\WorkAPI\obj\Debug\net5.0\WorkAPI.pdb
 C:\Users\sat\RiderProjects\WorkAPI\WorkAPI\obj\Debug\net5.0\WorkAPI.genruntimeconfig.cache
+C:\Users\sat\RiderProjects\WorkAPI\WorkAPI\bin\Debug\net5.0\data.json
