@@ -5,6 +5,6 @@ namespace WorkAPI.DTOs
 {
     public class SiteListDTO
     {
-        public Dictionary<string, site> Sites { get; set; }
+        public Dictionary<string, SiteDTO> Sites { get; set; }
     }
 }
