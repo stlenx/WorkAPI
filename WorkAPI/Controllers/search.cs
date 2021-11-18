@@ -26,14 +26,16 @@ namespace WorkAPI.Controllers
         private static readonly HtmlWeb Web = new HtmlWeb();
         private static readonly HttpClient Client = new HttpClient();
         private static ElementFinderRepository? _elementFinderRepository;
+        private static CacheRepository? _cacheRepository;
 
-        public search(ElementFinderRepository? elementFinderRepository)
+        public search(ElementFinderRepository? elementFinderRepository, CacheRepository cacheRepository)
         {
             _elementFinderRepository = elementFinderRepository;
+            _cacheRepository = cacheRepository;
         }
 
-        [HttpGet("{siteName}/{item}")]
-        public async Task<ActionResult<SearchDTO>> SearchItem(string siteName, string item)
+        [HttpGet("nocache/{siteName}/{item}")]
+        public async Task<ActionResult<SearchDTO>> SearchItemWithoutCache(string siteName, string item)
         {
             if (!manageSites.Sites.ContainsKey(siteName))
             {
@@ -42,19 +44,60 @@ namespace WorkAPI.Controllers
             
             var site = manageSites.Sites[siteName];
             
+            //get result
             var result = await CheckSite($"{site.url}{site.query}{item}", site);
+            //update cache
+            _cacheRepository?.UpdateResult(item, siteName, result);
 
             return new SearchDTO
             {
                 itemSearched = item,
                 site = site.name,
+                cached = false,
+                result = result
+            };
+        }
+
+        [HttpGet("cache/{siteName}/{item}")]
+        public async Task<ActionResult<SearchDTO>> SearchItemWithCache(string siteName, string item)
+        {
+            if (!manageSites.Sites.ContainsKey(siteName))
+            {
+                return NotFound();
+            }
+
+            var site = manageSites.Sites[siteName];
+
+            var exists = _cacheRepository?.GetResult(item, siteName, out _);
+            
+            SearchResult result;
+            var date = DateTime.MinValue;
+
+            if (exists == null)
+            {
+                result = await CheckSite($"{site.url}{site.query}{item}", site);
+                _cacheRepository?.AddResult(item, siteName, result);
+            }
+            else
+            {
+                var temp = _cacheRepository?.GetResult(item, siteName, out date);
+                result = temp ?? new SearchResult();
+                
+            }
+
+            return new SearchDTO
+            {
+                itemSearched = item,
+                site = site.name,
+                cached = exists != null,
+                date = date,
                 result = result
             };
         }
 
         private static async Task<SearchResult> CheckSite(string url, site site)
         {
-            var html = await GetHTML(url);
+            var html = await GetHtml(url);
 
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
@@ -96,7 +139,7 @@ namespace WorkAPI.Controllers
             return result;
         }
 
-        private static async Task<string> GetHTML(string url)
+        private static async Task<string> GetHtml(string url)
         {
             Client.DefaultRequestHeaders.Add("Accept","application/json");
 

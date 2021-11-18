@@ -1,9 +1,13 @@
-﻿namespace WorkAPI.DTOs
+﻿using System;
+
+namespace WorkAPI.DTOs
 {
     public class SearchDTO
     {
         public string itemSearched { get; set; }
         public string site { get; set; }
+        public bool cached { get; set; }
+        public DateTime date { get; set; }
         public SearchResult result { get; set; }
     }
 

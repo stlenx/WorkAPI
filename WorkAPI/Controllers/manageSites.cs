@@ -22,10 +22,7 @@ namespace WorkAPI.Controllers
             _siteRepository = siteRepository;
             _elementFinderRepository = elementFinderRepository;
 
-            if (!Sites.Any())
-            {
-                ReloadSites();
-            }
+            ReloadSites();
         }
 
         private void ReloadSites()
