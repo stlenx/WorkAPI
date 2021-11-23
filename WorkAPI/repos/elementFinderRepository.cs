@@ -6,46 +6,37 @@ using WorkAPI.items;
 
 namespace WorkAPI.repos
 {
-    public class ElementFinderRepository
+    public class ElementFinderRepository : RepositoryBase
     {
-        private readonly IConfiguration _configuration;
-
-        public ElementFinderRepository(IConfiguration configuration)
+        public ElementFinderRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
         }
 
         public elementFinder GetElementById(int id)
         {
             const string sql = "SELECT * FROM \"elementFinders\" WHERE id = @id";
             
-            using var con  = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-            
-            return con.QuerySingle<elementFinder>(sql, new {id});
+            return Con.QuerySingle<elementFinder>(sql, new {id});
         }
-
+        
         public int AddElementFinder(elementFinder element)
         {
             const string sql = "INSERT INTO \"elementFinders\" (type, data) VALUES (@type, @data) RETURNING id;";
-            
-            using var con  = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-            
-            return con.QuerySingle<int>(sql, new elementFinderDTO
+
+            return Con.QuerySingle<int>(sql, new elementFinderDTO
             {
                 type = element.type,
                 data = element.data
             });
         }
-
+        
         public bool RemoveElementFinder(int id)
         {
             const string sql = "DELETE FROM \"elementFinders\" WHERE id = @id;";
-
-            using var con  = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-
+            
             try
             {
-                con.Execute(sql, new {id});
+                Con.Execute(sql, new {id});
                 return true;
             }
             catch

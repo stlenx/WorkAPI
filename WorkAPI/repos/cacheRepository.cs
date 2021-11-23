@@ -9,13 +9,10 @@ using WorkAPI.items;
 
 namespace WorkAPI.repos
 {
-    public class CacheRepository
+    public class CacheRepository : RepositoryBase
     {
-        private readonly IConfiguration _configuration;
-
-        public CacheRepository(IConfiguration configuration)
+        public CacheRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
         }
 
         public int AddResult(string query, string site, SearchResult search)
@@ -23,9 +20,7 @@ namespace WorkAPI.repos
             const string sql =
                 "INSERT INTO \"cachedResults\" (query, site, \"resultName\", \"resultPrice\", \"resultImage\", \"resultLink\", \"timeStamp\") VALUES (@query, @site, @name, @price, @image, @link, @time);";
 
-            using var con = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-
-            con.Execute(sql, new
+            Con.Execute(sql, new
             {
                 query,
                 site,
@@ -43,13 +38,9 @@ namespace WorkAPI.repos
         {
             const string sql = "SELECT * FROM \"cachedResults\" WHERE query = @query AND site = @site";
 
-            using var con = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-
-            //Do some black magic here
-
             try
             {
-                var result = con.QuerySingle(sql, new {query, site});
+                var result = Con.QuerySingle(sql, new {query, site});
                 timeStamp = result.timeStamp;
                 return new SearchResult
                 {
@@ -70,11 +61,9 @@ namespace WorkAPI.repos
         {
             const string sql = "DELETE FROM \"cachedResults\" WHERE query = @query AND site = @site;";
 
-            using var con  = new NpgsqlConnection(_configuration.GetConnectionString("stokerrConnection"));
-
             try
             {
-                con.Execute(sql, new {query, site});
+                Con.Execute(sql, new {query, site});
                 return true;
             }
             catch

@@ -7,7 +7,7 @@ namespace WorkAPI.DTOs
         public string itemSearched { get; set; }
         public string site { get; set; }
         public bool cached { get; set; }
-        public DateTime date { get; set; }
+        public double time { get; set; }
         public SearchResult result { get; set; }
     }
 

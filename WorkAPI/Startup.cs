@@ -31,6 +31,7 @@ namespace WorkAPI
             services.AddTransient<SiteRepository>();
             services.AddTransient<ElementFinderRepository>();
             services.AddTransient<CacheRepository>();
+            services.AddTransient<ProfileRepository>();
             //services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "WorkAPI", Version = "v1"}); });
         }
 

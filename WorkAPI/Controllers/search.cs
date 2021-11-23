@@ -1,13 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -72,6 +68,7 @@ namespace WorkAPI.Controllers
             
             SearchResult result;
             var date = DateTime.MinValue;
+            var seconds = 0d;
 
             if (exists == null)
             {
@@ -81,6 +78,7 @@ namespace WorkAPI.Controllers
             else
             {
                 var temp = _cacheRepository?.GetResult(item, siteName, out date);
+                seconds = (DateTime.Now - date).TotalSeconds;
                 result = temp ?? new SearchResult();
                 
             }
@@ -90,7 +88,7 @@ namespace WorkAPI.Controllers
                 itemSearched = item,
                 site = site.name,
                 cached = exists != null,
-                date = date,
+                time = seconds,
                 result = result
             };
         }
