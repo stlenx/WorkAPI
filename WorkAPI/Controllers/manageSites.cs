@@ -14,28 +14,22 @@ namespace WorkAPI.Controllers
     [Route("[Controller]")]
     public class manageSites : ControllerBase
     {
-        public static Dictionary<string, site> Sites = new();
         private readonly SiteRepository _siteRepository;
         private readonly ElementFinderRepository _elementFinderRepository;
         public manageSites(SiteRepository siteRepository, ElementFinderRepository elementFinderRepository)
         {
             _siteRepository = siteRepository;
             _elementFinderRepository = elementFinderRepository;
-
-            ReloadSites();
-        }
-
-        private void ReloadSites()
-        {
-            Sites = _siteRepository.GetSites();
         }
 
         [HttpGet]
         public SiteListDTO GetSites()
         {
+            var sites = _siteRepository.GetSites();
+            
             var dict = new Dictionary<string, SiteDTO>();
 
-            foreach (var (name, site) in Sites)
+            foreach (var (name, site) in sites)
             {
                 var element = _elementFinderRepository.GetElementById(site.elementFinderId);
                 
@@ -65,7 +59,9 @@ namespace WorkAPI.Controllers
         [HttpGet("{siteName}")]
         public ActionResult RemoveSite(string siteName)
         {
-            if (!Sites.ContainsKey(siteName))
+            var site = _siteRepository.GetSiteById(siteName);
+            
+            if (site == null)
             {
                 return NotFound();
             }
@@ -74,16 +70,15 @@ namespace WorkAPI.Controllers
 
             if (!result) return NotFound();
 
-            _elementFinderRepository.RemoveElementFinder(Sites[siteName].elementFinderId);
-            
-            Sites.Remove(siteName);
+            _elementFinderRepository.RemoveElementFinder(site.elementFinderId);
+
             return Ok();
         }
         
         [HttpPost]
         public ActionResult<int> AddSite([FromBody] SiteDTO site)
         {
-            if (Sites.ContainsKey(site.name))
+            if (_siteRepository.GetSiteById(site.name) != null)
             {
                 return Conflict();
             }
@@ -107,8 +102,6 @@ namespace WorkAPI.Controllers
             };
 
             var result = _siteRepository.AddSite(newSite);
-            
-            Sites.Add(site.name, newSite);
 
             return StatusCode(result);
         }

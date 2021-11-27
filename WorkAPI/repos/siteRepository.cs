@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -13,29 +14,42 @@ namespace WorkAPI.repos
         {
         }
         
-        public site GetSiteById(string name)
+        public site? GetSiteById(string name)
         {
-            const string sql = "SELECT * FROM websites WHERE name = @name";
+            var con = new NpgsqlConnection(connection);
             
-            return Con.QuerySingle<site>(sql, new {name});
+            const string sql = "SELECT * FROM websites WHERE name = @name";
+
+            try
+            {
+                return con.QuerySingle<site>(sql, new {name});
+            }
+            catch
+            {
+                return null;
+            }
         }
         
         public Dictionary<string, site> GetSites()
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "SELECT * FROM websites";
 
-            var sites = Con.Query<site>(sql);
+            var sites = con.Query<site>(sql);
 
             return sites.ToDictionary(x => x.name);
         }
 
         public int AddSite(site site)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "INSERT INTO websites (name, url, query, \"elementFinderId\", \"resultName\", \"resultPrice\", \"resultImage\", \"resultLink\") VALUES (@name, @url, @query, @elementFinderId, @resultName, @resultPrice, @resultImage, @resultLink);";
             
             try
             {
-                Con.Execute(sql, site);
+                con.Execute(sql, site);
                 return 200;
             }
             catch
@@ -46,11 +60,13 @@ namespace WorkAPI.repos
 
         public bool RemoveSite(string name)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "DELETE FROM websites WHERE name = @name;";
 
             try
             {
-                Con.Execute(sql, new {name});
+                con.Execute(sql, new {name});
                 return true;
             }
             catch

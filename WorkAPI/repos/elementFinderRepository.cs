@@ -14,16 +14,20 @@ namespace WorkAPI.repos
 
         public elementFinder GetElementById(int id)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "SELECT * FROM \"elementFinders\" WHERE id = @id";
             
-            return Con.QuerySingle<elementFinder>(sql, new {id});
+            return con.QuerySingle<elementFinder>(sql, new {id});
         }
         
         public int AddElementFinder(elementFinder element)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "INSERT INTO \"elementFinders\" (type, data) VALUES (@type, @data) RETURNING id;";
 
-            return Con.QuerySingle<int>(sql, new elementFinderDTO
+            return con.QuerySingle<int>(sql, new elementFinderDTO
             {
                 type = element.type,
                 data = element.data
@@ -32,11 +36,13 @@ namespace WorkAPI.repos
         
         public bool RemoveElementFinder(int id)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "DELETE FROM \"elementFinders\" WHERE id = @id;";
             
             try
             {
-                Con.Execute(sql, new {id});
+                con.Execute(sql, new {id});
                 return true;
             }
             catch

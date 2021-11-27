@@ -22,23 +22,27 @@ namespace WorkAPI.Controllers
         private static readonly HtmlWeb Web = new HtmlWeb();
         private static readonly HttpClient Client = new HttpClient();
         private static ElementFinderRepository? _elementFinderRepository;
+        private static SiteRepository? _siteRepository;
         private static CacheRepository? _cacheRepository;
 
-        public search(ElementFinderRepository? elementFinderRepository, CacheRepository cacheRepository)
+        public search(ElementFinderRepository? elementFinderRepository, CacheRepository cacheRepository, SiteRepository siteRepository)
         {
             _elementFinderRepository = elementFinderRepository;
             _cacheRepository = cacheRepository;
+            _siteRepository = siteRepository;
         }
 
         [HttpGet("nocache/{siteName}/{item}")]
         public async Task<ActionResult<SearchDTO>> SearchItemWithoutCache(string siteName, string item)
         {
-            if (!manageSites.Sites.ContainsKey(siteName))
+            var site = _siteRepository?.GetSiteById(siteName);
+            
+            if (site == null)
             {
                 return NotFound();
             }
-            
-            var site = manageSites.Sites[siteName];
+
+            item = await FormatSearchQuery(item);
             
             //get result
             var result = await CheckSite($"{site.url}{site.query}{item}", site);
@@ -57,12 +61,14 @@ namespace WorkAPI.Controllers
         [HttpGet("cache/{siteName}/{item}")]
         public async Task<ActionResult<SearchDTO>> SearchItemWithCache(string siteName, string item)
         {
-            if (!manageSites.Sites.ContainsKey(siteName))
+            var site = _siteRepository?.GetSiteById(siteName);
+            
+            if (site == null)
             {
                 return NotFound();
             }
-
-            var site = manageSites.Sites[siteName];
+            
+            item = await FormatSearchQuery(item);
 
             var exists = _cacheRepository?.GetResult(item, siteName, out _);
             
@@ -135,6 +141,12 @@ namespace WorkAPI.Controllers
             };
 
             return result;
+        }
+
+        private static async Task<string> FormatSearchQuery(string item)
+        {
+            var final = item.TrimEnd().TrimStart().ToLower();
+            return final;
         }
 
         private static async Task<string> GetHtml(string url)

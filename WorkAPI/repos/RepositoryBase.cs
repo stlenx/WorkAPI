@@ -5,11 +5,12 @@ namespace WorkAPI.repos
 {
     public abstract class RepositoryBase
     {
-        protected readonly NpgsqlConnection Con;
+        protected static string connection;
 
         protected RepositoryBase(IConfiguration configuration)
         {
-            Con = new NpgsqlConnection(configuration.GetConnectionString("stokerrConnection"));
+            //Con = new NpgsqlConnection(configuration.GetConnectionString("stokerrConnection"));
+            connection = configuration.GetConnectionString("stokerrConnection");
         }
     }
 }

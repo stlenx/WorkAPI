@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,12 @@ namespace WorkAPI.repos
 
         public int AddResult(string query, string site, SearchResult search)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql =
                 "INSERT INTO \"cachedResults\" (query, site, \"resultName\", \"resultPrice\", \"resultImage\", \"resultLink\", \"timeStamp\") VALUES (@query, @site, @name, @price, @image, @link, @time);";
 
-            Con.Execute(sql, new
+            con.Execute(sql, new
             {
                 query,
                 site,
@@ -36,11 +39,13 @@ namespace WorkAPI.repos
 
         public SearchResult? GetResult(string query, string site, out DateTime timeStamp)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "SELECT * FROM \"cachedResults\" WHERE query = @query AND site = @site";
 
             try
             {
-                var result = Con.QuerySingle(sql, new {query, site});
+                var result = con.Query(sql, new {query, site}).First();
                 timeStamp = result.timeStamp;
                 return new SearchResult
                 {
@@ -59,11 +64,13 @@ namespace WorkAPI.repos
 
         public bool RemoveResult(string query, string site)
         {
+            var con = new NpgsqlConnection(connection);
+            
             const string sql = "DELETE FROM \"cachedResults\" WHERE query = @query AND site = @site;";
 
             try
             {
-                Con.Execute(sql, new {query, site});
+                con.Execute(sql, new {query, site});
                 return true;
             }
             catch
