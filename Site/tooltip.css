@@ -1,0 +1,15 @@
+#tooltip { 
+    z-index: 99999;
+    display: none;
+    position: absolute;
+
+    transform: translate(-50%, -150%);
+
+    font-family: 'Roboto', sans-serif;;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+
+    white-space: nowrap;
+}

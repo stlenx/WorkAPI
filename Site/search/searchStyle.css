@@ -1,0 +1,304 @@
+select {
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+label {
+    margin-left: 20px;
+}
+
+#input {
+    text-align: center;
+}
+
+input[type="text"] {
+    font-size: 1.69em;
+    outline: transparent;
+    border: unset;
+    background-color: var(--clear1);
+    border-bottom: var(--dark) solid 2px;
+
+    margin-right: 20px;
+}
+
+button {
+    font-size: 1.2em;
+    font-family: var(--headerFont);
+    overflow: hidden;
+    background-color: var(--clear);
+    padding: 0.4rem 1rem;
+    outline: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem rgb(0 0 0 / 30%);
+    cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 60px;
+    transition: font-size 0.1s;
+}
+
+
+.result {
+    background-color: var(--clear);
+    border-radius: 10px;
+
+    padding: 15px;
+    margin: 10px;
+
+    align-items: center;
+}
+.result:hover {
+    cursor: pointer;
+}
+
+.resultDetail {
+    font-size: 1.5em;
+
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.resultDetail:first-child {
+    margin-left: 0;
+}
+.resultDetail:last-child {
+    margin-right: 0;
+}
+
+.itemImage {
+    width: 100px;
+}
+
+.resultCached, .cacheTime {
+    color: #1ec71e;
+}
+
+
+#loading {
+    display: none;
+    font-size: 3em;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+
+    text-align: center;
+    align-content: center;
+
+    width: 120px;
+    height: 120px;
+
+    margin-top: 25px;
+}
+
+
+#settingsButton {
+    
+}
+
+.form div label {
+    font-size: 1.5em;
+}
+.form div {
+    margin: 20px 0;
+}
+
+
+.loadingAnimationContainer {
+    width: 112px;
+    height: 112px;
+}
+
+.box1, .box2, .box3 {
+    border: 12px solid var(--dark);
+    box-sizing: border-box;
+    position: absolute;
+    display: block;
+}
+.box1 {
+    width: 112px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0;
+    animation: anime1 3s 0s forwards ease-in-out infinite;
+}
+.box2 {
+    width: 48px;
+    height: 48px;
+    margin-top: 0;
+    margin-left: 0;
+    animation: anime2 3s 0s forwards ease-in-out infinite;
+}
+.box3 {
+    width: 48px;
+    height: 48px;
+    margin-top: 0;
+    margin-left: 64px;
+    animation: anime3 3s 0s forwards ease-in-out infinite;
+}
+
+@keyframes anime1 {
+    0% {
+        width: 112px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    12.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    25% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    37.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    50% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    62.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+    }
+    75% {
+        width: 48px;
+        height: 112px;
+        margin-top:0;
+    }
+    87.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+    }
+    100% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+    }
+}
+
+@keyframes anime2 {
+    0% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left:0;
+    }
+    12.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left:0;
+    }
+    25% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left:0;
+    }
+    37.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left:0;
+    }
+    50% {
+        width: 112px;
+        height: 48px;
+        margin-top:0;
+        margin-left:0;
+    }
+    62.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    75% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    87.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    100% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+}
+
+@keyframes anime3 {
+    0% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    12.5% {
+        width: 48px;
+        height: 48px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    25% {
+        width: 48px;
+        height: 112px;
+        margin-top:0;
+        margin-left: 64px;
+    }
+    37.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left: 64px;
+    }
+    50% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left: 64px;
+    }
+    62.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left: 64px;
+    }
+    75% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left: 64px;
+    }
+    87.5% {
+        width: 48px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left: 64px;
+    }
+    100% {
+        width: 112px;
+        height: 48px;
+        margin-top: 64px;
+        margin-left:0;
+    }
+}
+

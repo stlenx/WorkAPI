@@ -1,0 +1,84 @@
+.bottomRightButton {
+    position: absolute;
+    top: calc(100% - 100px);
+    left: calc(100% - 100px);
+}
+
+.bottomLeftButton {
+    position: absolute;
+    top: calc(100% - 100px);
+    left: 100px;
+}
+
+.bottomRightButton, .bottomLeftButton {
+    background-color: var(--clear);
+
+    transform: translate(-50%, -50%);
+
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+
+    line-height: 100%;
+
+    transition: all 0.2s;
+}
+.bottomRightButton:hover, .bottomLeftButton:hover {
+    width: 125px;
+    height: 125px;
+
+    cursor: pointer;
+}
+.bottomRightButton:hover > svg, .bottomLeftButton:hover > svg {
+    width: 75px;
+    height: 75px;
+}
+
+.bottomRightButton svg, .bottomLeftButton svg {
+    position: relative;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 50px;
+    height: 50px;
+    transition: all 0.2s;
+}
+
+.buttonCard {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0.34);
+}
+
+.card {
+    margin: 5% 25%;
+    padding: 25px;
+
+    border-radius: 10px;
+    background-color: var(--clear);
+
+    text-align: center;
+}
+
+.card .title {
+    font-size: 2.5em;
+    background-color: unset;
+    width: unset;
+}
+
+.formInput {
+    margin: 15px;
+    font-family: var(--textFont);
+    font-size: 1.5em;
+}

@@ -1,13 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Urbanist&display=swap');
+
 :root {
-    --headerFont: Verdana;
+    --clear: #ffffff;
+    --clear1: #f1f1f1;
+    --clear2: #b7b7b7;
+    --clear3: #727272;
+
+    --background: #f1f1f1;
+    --almost-white: #efefef;
+    --dark: black;
+
+    --textFont: 'Roboto', sans-serif;
+    --headerFont: 'Urbanist', sans-serif;
 }
 
-h1 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+body {
+     overflow: hidden;
 
+    width: 100%;
+    height: 100%;
+
+    background-color: var(--clear1);
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+
+    height: 100%;
+    width: 100%;
+
+    font-family: var(--textFont);
+
+    background-color: var(--clear1);
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+
+    background-color: var(--clear);
+}
+
+.navBarItem {
     font-family: var(--headerFont);
+    font-size: 2em;
+
+    margin: 0 40px;
+}
+.navBarItem:first-child {
+    margin-left: 10px;
+}
+
+.title {
     font-size: 4em;
+    font-family: var(--headerFont);
+}
+
+.content {
+    padding-top: 50px;
+}
+
+#sites {
+    text-align: center;
+    font-size: 2em;
+
+    display: block;
+}
+
+a {
+    display: block;
+    color: unset;
+    text-decoration: unset;
+
+    padding: 10px;
+}
+
+
+.formInput label input {
+    font-size: 1.2em;
+    outline: transparent;
+    border: unset;
+    border-bottom: var(--dark) solid 2px;
+}
+
+.formInput .formInput {
+    margin: unset;
+    font-size: 1em;
+}
+
+.form button {
+    font-size: 1.5em;
+    font-family: var(--headerFont);
+    overflow: hidden;
+    color: #fff;
+    background-color: #179ee3;
+    padding: 0.7rem 1.5rem;
+    outline: 0;
+    border: 0;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem rgb(0 0 0 / 30%);
+    cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 60px;
+    transition: font-size 0.1s;
+}
+
+.form button:hover {
+    background-color: #3cb2ff;
+}
+
+.closeCard {
+    position: relative;
+    top: 0;
+    left: calc(100% - 60px);
+
+    width: 40px;
+}
+
+.closeCard:hover {
+    cursor: pointer;
+}
+
+.closeCard svg {
+    width: 60px;
+    height: 60px;
+}
+
+.flexbox {
+    display: flex;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
